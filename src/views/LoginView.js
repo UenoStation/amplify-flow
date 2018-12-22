@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import DefaultButton from '../components/DefaultButton';
 import Input from '../components/Input';
+import InputLabel from '../components/InputLabel';
 import Panel from '../components/Panel';
+
+const Container = styled.section`
+display: flex;
+align-items: center;
+width: 100vw;
+height: 100vh;
+justify-content: center;
+`;
 
 class LoginView extends Component {
     constructor(props) {
@@ -11,28 +21,29 @@ class LoginView extends Component {
             password: ''
         }
     }
-    onHandleInputChange = (name, val) => {
-        this.setState({ [name]: val });
-    }
+
+    onHandleInputChange = (name, val) => this.setState({ [name]: val })
+    onHandleClick = () => this.props.onSubmit(this.state);
+
     render() {
         return (
-            <section>
+            <Container>
                 <Panel>
-                    <label>Username</label>
+                    <InputLabel>Username</InputLabel>
                     <Input
                         name="username"
                         onInputChange={this.onHandleInputChange}
                         placeholder="Enter your username"
                     />
-                    <label>Password</label>
+                    <InputLabel>Password</InputLabel>
                     <Input
                         name="password"
                         onInputChange={this.onHandleInputChange}
                         placeholder="Enter your password"
                     />
-                    <DefaultButton>Submit</DefaultButton>
+                    <DefaultButton onClick={this.onHandleClick}>Submit</DefaultButton>
                 </Panel>
-            </section>
+            </Container>
         )
     }
 }
