@@ -5,6 +5,7 @@ import './App.css';
 // views
 import LoginView from './views/LoginView';
 import HomeView from './views/HomeView';
+import RegisterView from './views/RegisterView';
 
 import awsconfig from './aws-exports';
 Amplify.configure(awsconfig);
@@ -12,7 +13,15 @@ Amplify.configure(awsconfig);
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: null }
+    this.state = { user: null, showRegister: false }
+  }
+
+  componentDidMount() {
+    if (Auth)
+      Auth
+        .currentSession()
+        .then(user => this.setState({ user: user }))
+        .catch(err => console.log(err));
   }
 
   onLogin = ({ username, password }) => {
@@ -42,10 +51,32 @@ class App extends Component {
       })
   }
 
+  toggleRegister = () => this.setState({ showRegister: !this.state.showRegister })
+
+  isHomeView = () => {
+    const { showRegister, user } = this.state;
+    return user
+  }
+  isLoginView = () => {
+    const { showRegister, user } = this.state;
+    return user === null && showRegister === false;
+  }
+  isRegisterView = () => {
+    const { showRegister, user } = this.state;
+    return user === null && showRegister;
+  }
+
   render() {
     return (
       <div className="App">
-        {(this.state.user) ? <HomeView /> : <LoginView onSubmit={this.onLogin} />}
+        {this.isLoginView() &&
+          <LoginView
+            onToggleRegister={this.toggleRegister}
+            onSubmit={this.onLogin}
+          />
+        }
+        {this.isHomeView() && <HomeView />}
+        {this.isRegisterView() && <RegisterView />}
       </div>
     );
   }

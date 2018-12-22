@@ -9,11 +9,11 @@ flex-flow: column nowrap;
 justify-content: space-between;
 padding: 30px;
 width: 600px;
-height: 300px;
+height: ${props => (props.tall) ? "500px" : "300px"}
 `;
 
 const Panel = props => {
-    return <Container>{props.children}</Container>
+    return <Container {...props}>{props.children}</Container>
 }
 
 export default Panel;

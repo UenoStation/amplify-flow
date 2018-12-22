@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+
+// components
 import DefaultButton from '../components/DefaultButton';
+import FullScreenContainer from '../components/FullScreenContainer';
 import Input from '../components/Input';
 import InputLabel from '../components/InputLabel';
+import LinkButton from '../components/LinkButton';
 import Panel from '../components/Panel';
-
-const Container = styled.section`
-display: flex;
-align-items: center;
-width: 100vw;
-height: 100vh;
-justify-content: center;
-`;
 
 class LoginView extends Component {
     constructor(props) {
@@ -22,12 +17,13 @@ class LoginView extends Component {
         }
     }
 
-    onHandleInputChange = (name, val) => this.setState({ [name]: val })
     onHandleClick = () => this.props.onSubmit(this.state);
+    onHandleInputChange = (name, val) => this.setState({ [name]: val })
+    onHandleRegisterClick = () => this.props.onToggleRegister()
 
     render() {
         return (
-            <Container>
+            <FullScreenContainer>
                 <Panel>
                     <InputLabel>Username</InputLabel>
                     <Input
@@ -42,8 +38,9 @@ class LoginView extends Component {
                         placeholder="Enter your password"
                     />
                     <DefaultButton onClick={this.onHandleClick}>Submit</DefaultButton>
+                    <LinkButton onClick={this.onHandleRegisterClick}>Register</LinkButton>
                 </Panel>
-            </Container>
+            </FullScreenContainer>
         )
     }
 }
