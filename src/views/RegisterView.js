@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '../components/DefaultButton';
 import FullScreenContainer from '../components/FullScreenContainer';
 import Input from '../components/Input';
+import LinkButton from '../components/LinkButton';
 import Panel from '../components/Panel';
 
 export default class Signup extends Component {
@@ -10,12 +11,14 @@ export default class Signup extends Component {
         this.state = {
             username: '',
             password: '',
-            email: ''
+            email: '',
+            phone_number: ''
         }
     }
 
     onInputChange = (name, val) => this.setState({ [name]: val })
     onHandleClick = () => this.props.onSubmit(this.state)
+    onHandleSignInClick = () => this.props.onToggleSignIn()
 
     render() {
         return (
@@ -42,6 +45,7 @@ export default class Signup extends Component {
                         onInputChange={this.onInputChange}
                     />
                     <Button onClick={this.onHandleClick}>Submit</Button>
+                    <LinkButton onClick={this.onHandleSignInClick}>Sign In</LinkButton>
                     {
                         this.props.userConfirmed &&
                         <h1>You're all set!</h1>

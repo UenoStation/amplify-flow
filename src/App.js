@@ -51,7 +51,11 @@ class App extends Component {
       })
   }
 
-  toggleRegister = () => this.setState({ showRegister: !this.state.showRegister })
+  toggleRegister = () => {
+    console.log('-- toggleRegister called! --');
+
+    this.setState({ showRegister: !this.state.showRegister })
+  }
 
   isHomeView = () => {
     const { showRegister, user } = this.state;
@@ -75,8 +79,13 @@ class App extends Component {
             onSubmit={this.onLogin}
           />
         }
+        {this.isRegisterView() &&
+          <RegisterView
+            onToggleSignIn={this.toggleRegister}
+            onSubmit={this.onRegister}
+          />
+        }
         {this.isHomeView() && <HomeView />}
-        {this.isRegisterView() && <RegisterView />}
       </div>
     );
   }
