@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 // components
@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import LinkButton from '../components/LinkButton';
 
 const Section = styled.section`
-background-color: aquamarine;
+padding: 20px;
 `;
 
 class HomeView extends Component {

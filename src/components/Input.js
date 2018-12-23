@@ -20,6 +20,7 @@ const Input = props => {
         <TextInput
             name={props.name}
             placeholder={props.placeholder}
+            type={props.type}
             onChange={(e) => props.onInputChange(props.name, e.currentTarget.value)}
         />
     )

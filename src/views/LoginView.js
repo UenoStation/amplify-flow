@@ -36,6 +36,7 @@ class LoginView extends Component {
                         name="password"
                         onInputChange={this.onHandleInputChange}
                         placeholder="Enter your password"
+                        type="password"
                     />
                     <DefaultButton onClick={this.onHandleClick}>Submit</DefaultButton>
                     <LinkButton onClick={this.onHandleRegisterClick}>Register</LinkButton>

@@ -5,6 +5,7 @@ const Link = styled.a`
 color: darkcyan;
 :hover {
     color: darkseagreen;
+    cursor: pointer;
 }
 `;
 

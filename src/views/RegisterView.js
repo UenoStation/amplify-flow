@@ -33,6 +33,7 @@ export default class Signup extends Component {
                     <Input
                         name="password"
                         onInputChange={this.onInputChange}
+                        type="password"
                     />
                     <label>Email</label>
                     <Input
