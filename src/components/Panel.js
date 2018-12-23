@@ -2,15 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-border: 1px solid #efefef;
+border: 1px solid #e9e9e9;
 background-color: white;
 display: flex;
 flex-flow: column nowrap;
-max-width: 600px;
+justify-content: space-between;
+padding: 30px;
+width: 600px;
+height: ${props => (props.tall) ? "500px" : "300px"}
 `;
 
 const Panel = props => {
-    return <Container>{props.children}</Container>
+    return <Container {...props}>{props.children}</Container>
 }
 
 export default Panel;
