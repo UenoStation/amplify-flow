@@ -37,11 +37,13 @@ export default class Signup extends Component {
                     <label>Email</label>
                     <Input
                         name="email"
+                        placeholder="joe@email.com"
                         onInputChange={this.onInputChange}
                     />
                     <label>Phone</label>
                     <Input
                         name="phone_number"
+                        placeholder="+12023334567"
                         onInputChange={this.onInputChange}
                     />
                     <Button onClick={this.onHandleClick}>Submit</Button>

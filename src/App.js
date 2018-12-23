@@ -8,12 +8,20 @@ import HomeView from './views/HomeView';
 import RegisterView from './views/RegisterView';
 
 import awsconfig from './aws-exports';
+import VerifyView from './views/VerifyView';
 Amplify.configure(awsconfig);
+
+
+// TODO: Make inputs password types
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: null, showRegister: false }
+    this.state = {
+      user: null,
+      showRegister: false,
+      showVerify: false
+    }
   }
 
   componentDidMount() {
@@ -43,31 +51,52 @@ class App extends Component {
     })
       .then(data => {
         console.log(data);
-        if (data.userConfirmed)
-          this.setState({ userConfirmed: data.userConfirmed })
+        this.setState(Object.assign({}, { user: false, showRegister: false, showVerify: true }));
       })
       .catch(err => {
         console.log(err);
       })
   }
 
-  toggleRegister = () => {
-    console.log('-- toggleRegister called! --');
+  onConfirmRegister = vInfo => {
+    const { username, code } = vInfo;
+    Auth.confirmSignUp(username, code)
+      .then(data => {
+        console.log(data);
+        this.setState(Object.assign({}, { user: false, showRegister: false, showVerify: false }));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
 
+  signOut = () => {
+    Auth.signOut()
+      .then(data => {
+        console.log(data);
+        this.setState(Object.assign({}, { user: false, showRegister: false, showVerify: false }));
+      })
+      .catch(err => console.log(err));
+  }
+
+  toggleRegister = () => {
     this.setState({ showRegister: !this.state.showRegister })
   }
 
   isHomeView = () => {
-    const { showRegister, user } = this.state;
-    return user
+    const { showRegister, showVerify, user } = this.state;
+    return user && !showRegister && !showVerify;
   }
   isLoginView = () => {
-    const { showRegister, user } = this.state;
-    return user === null && showRegister === false;
+    const { showRegister, showVerify, user } = this.state;
+    return !user && !showRegister && !showVerify;
   }
   isRegisterView = () => {
     const { showRegister, user } = this.state;
     return user === null && showRegister;
+  }
+  isVerifyView = () => {
+    return this.state.showVerify;
   }
 
   render() {
@@ -85,7 +114,13 @@ class App extends Component {
             onSubmit={this.onRegister}
           />
         }
-        {this.isHomeView() && <HomeView />}
+        {
+          this.isVerifyView() &&
+          <VerifyView onSubmit={this.onConfirmRegister} />
+        }
+        {this.isHomeView() &&
+          <HomeView onHandleSignOut={this.signOut} />
+        }
       </div>
     );
   }
